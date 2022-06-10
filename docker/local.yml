@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+
+    phmoney:
+        container_name: ${COMPOSE_PROJECT_NAME}_${PHCOMM_NAME}
+        image: phalouvas/laravel:php8.0-nginx-develop
+        hostname: ${PHCOMM_NAME}
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}${PHCOMM_NAME}.entrypoints=web"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}${PHCOMM_NAME}.rule=Host(`${PHCOMM_NAME}.${COMPOSE_BASE_DOMAIN}`)"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}${PHCOMM_NAME}.service=${COMPOSE_PROJECT_NAME}${PHCOMM_NAME}1"
+            - "traefik.http.services.${COMPOSE_PROJECT_NAME}${PHCOMM_NAME}1.loadbalancer.server.port=80"
+        environment:
+            - PHCOMM_ENV=local
+            - PHCOMM_BUILD_ASSETS=false
+            - PHCOMM_SUPERVISOR=false
+        volumes:
+            - ../code/:/var/www/html//:rw
+            - ../docker/:/home/docker//:rw
+
+networks:
+    default:
+        name: ${COMPOSE_NETWORK_NAME}-local-net
+        driver: bridge
