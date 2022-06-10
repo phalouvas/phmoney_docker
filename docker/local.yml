@@ -17,7 +17,7 @@ services:
             - PHCOMM_BUILD_ASSETS=false
             - PHCOMM_SUPERVISOR=false
         volumes:
-            - ../code/:/var/www/html//:rw
+            - ../phmoney_app/:/var/www/html//:rw
             - ../docker/:/home/docker//:rw
 
 networks:
