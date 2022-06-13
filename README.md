@@ -6,8 +6,6 @@ The application https://github.com/kainotomo/phmoney_app should be stored in fol
 
 It is depended on docker environment https://github.com/kainotomo/local_services
 
-Create docker image with: `docker-compose -f local.yml up -d --build`
-
 ## Installation
 
 *root -> the working directory
@@ -29,3 +27,4 @@ Create docker image with: `docker-compose -f local.yml up -d --build`
         }
     },
 ```
+* Create docker image with: `docker-compose -f local.yml up -d --build`
