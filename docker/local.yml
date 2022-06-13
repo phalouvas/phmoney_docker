@@ -31,7 +31,7 @@ services:
             - "traefik.http.routers.${COMPOSE_PROJECT_NAME}assets.service=${COMPOSE_PROJECT_NAME}$assets"
             - "traefik.http.services.${COMPOSE_PROJECT_NAME}assets.loadbalancer.server.port=80"
         volumes:
-            - ../code/dist/:/var/www/html/:rw
+            - ../phmoney_assets/dist/:/var/www/html/:rw
 
 networks:
     default:
