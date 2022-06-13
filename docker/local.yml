@@ -28,7 +28,7 @@ services:
             - "traefik.enable=true"
             - "traefik.http.routers.${COMPOSE_PROJECT_NAME}assets.entrypoints=web"
             - "traefik.http.routers.${COMPOSE_PROJECT_NAME}assets.rule=Host(`${COMPOSE_PROJECT_NAME}_assets.${COMPOSE_BASE_DOMAIN}`)"
-            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}assets.service=${COMPOSE_PROJECT_NAME}$assets"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}assets.service=${COMPOSE_PROJECT_NAME}assets"
             - "traefik.http.services.${COMPOSE_PROJECT_NAME}assets.loadbalancer.server.port=80"
         volumes:
             - ../phmoney_assets/dist/:/var/www/html/:rw
