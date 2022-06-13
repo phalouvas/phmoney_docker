@@ -14,8 +14,7 @@ It is depended on docker environment https://github.com/kainotomo/local_services
 * From **root/local_services** `docker-compose -f local.yml up -d --build` to create general services
 * From **root** `git clone https://github.com/kainotomo/phmoney_docker.git`
 * From **root/phmoney_docker** `composer create-project kainotomo/phmoney_app`
-* From **root/phmoney_docker/docker** `docker-compose -f local.yml up -d --build`
-* For assets development from ***root/phmoney_docker/phmoney_assets/public/js** `git clone https://github.com/kainotomo/phmoney_assets.git`
+* From ***root/phmoney_docker** `git clone https://github.com/kainotomo/phmoney_assets.git`
 *  For library development 
    - From **root/phmoney_docker/phmoney_assets/app/Providers** `git clone https://github.com/kainotomo/phmoney_library.git`
    - Add in composer.json file below entry
@@ -27,6 +26,5 @@ It is depended on docker environment https://github.com/kainotomo/local_services
         }
     },
 ```
-* From **root/phmoney_docker/phmoney_app**: `cp .env.example .env.local`
 * From **root/phmoney_docker/docker**: `docker-compose -f local.yml up -d --build`
 * From within image phmoney_phmoney docker shell: `composer install`
