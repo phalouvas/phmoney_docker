@@ -27,4 +27,6 @@ It is depended on docker environment https://github.com/kainotomo/local_services
         }
     },
 ```
-* Create docker image with: `docker-compose -f local.yml up -d --build`
+* From **root/phmoney_docker/phmoney_app**: `cp .env.example .env.local`
+* From **root/phmoney_docker/docker**: `docker-compose -f local.yml up -d --build`
+* From within image phmoney_phmoney docker shell: `composer install`
