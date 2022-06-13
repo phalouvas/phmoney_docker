@@ -16,7 +16,7 @@ It is depended on docker environment https://github.com/kainotomo/local_services
 * From **root/phmoney_docker** `git clone https://github.com/kainotomo/phmoney_app.git`
 * From ***root/phmoney_docker** `git clone https://github.com/kainotomo/phmoney_assets.git`
 *  For library development 
-   - From **root/phmoney_docker/phmoney_assets/app/Providers** `git clone https://github.com/kainotomo/phmoney_library.git`
+   - From **root/phmoney_docker/phmoney_assets/app/Providers** `git clone https://github.com/kainotomo/phmoney_provider.git`
    - Add in composer.json file below entry
 ```
 "autoload": {
