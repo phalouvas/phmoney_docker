@@ -2,16 +2,16 @@ version: '3.9'
 
 services:
 
-    phmoney:
-        container_name: ${COMPOSE_PROJECT_NAME}_${COMPOSE_SUB_DOMAIN}
+    phmoney_app:
+        container_name: ${COMPOSE_PROJECT_NAME}_app
         image: phalouvas/laravel:php8.0-nginx-develop
         hostname: ${COMPOSE_SUB_DOMAIN}
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.${COMPOSE_PROJECT_NAME}${COMPOSE_SUB_DOMAIN}.entrypoints=web"
-            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}${COMPOSE_SUB_DOMAIN}.rule=Host(`${COMPOSE_SUB_DOMAIN}.${COMPOSE_BASE_DOMAIN}`)"
-            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}${COMPOSE_SUB_DOMAIN}.service=${COMPOSE_PROJECT_NAME}${COMPOSE_SUB_DOMAIN}1"
-            - "traefik.http.services.${COMPOSE_PROJECT_NAME}${COMPOSE_SUB_DOMAIN}1.loadbalancer.server.port=80"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}${COMPOSE_SUB_DOMAIN}.rule=Host(`${COMPOSE_SUB_DOMAIN}_app.${COMPOSE_BASE_DOMAIN}`)"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}${COMPOSE_SUB_DOMAIN}.service=${COMPOSE_PROJECT_NAME}${COMPOSE_SUB_DOMAIN}app"
+            - "traefik.http.services.${COMPOSE_PROJECT_NAME}${COMPOSE_SUB_DOMAIN}app.loadbalancer.server.port=80"
         environment:
             - PHCOMM_ENV=local
             - PHCOMM_BUILD_ASSETS=false
@@ -19,6 +19,19 @@ services:
         volumes:
             - ../phmoney_app/:/var/www/html//:rw
             - ../docker/:/home/docker//:rw
+
+    phmoney_assets:
+        container_name: ${COMPOSE_PROJECT_NAME}_assets
+        build: ./assets
+        hostname: ${COMPOSE_SUB_DOMAIN}
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}${COMPOSE_SUB_DOMAIN}.entrypoints=web"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}${COMPOSE_SUB_DOMAIN}.rule=Host(`${COMPOSE_SUB_DOMAIN}_assets.${COMPOSE_BASE_DOMAIN}`)"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}${COMPOSE_SUB_DOMAIN}.service=${COMPOSE_PROJECT_NAME}${COMPOSE_SUB_DOMAIN}assets"
+            - "traefik.http.services.${COMPOSE_PROJECT_NAME}${COMPOSE_SUB_DOMAIN}assets.loadbalancer.server.port=80"
+        volumes:
+            - ../code/dist/:/var/www/html/:rw
 
 networks:
     default:

@@ -1,0 +1,5 @@
+FROM php:8.1-apache
+COPY ./apache/apache2.conf /etc/apache2/apache2.conf
+COPY ./apache/headers.load /etc/apache2/mods-enabled/headers.load
+COPY ./apache/rewrite.load /etc/apache2/mods-enabled/rewrite.load
+COPY ./php.ini /usr/local/etc/php/php.ini
