@@ -5,13 +5,13 @@ services:
     phmoney_app:
         container_name: ${COMPOSE_PROJECT_NAME}_app
         image: phalouvas/laravel:php8.0-nginx-develop
-        hostname: ${COMPOSE_SUB_DOMAIN}
+        hostname: app
         labels:
             - "traefik.enable=true"
-            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}${COMPOSE_SUB_DOMAIN}.entrypoints=web"
-            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}${COMPOSE_SUB_DOMAIN}.rule=Host(`${COMPOSE_SUB_DOMAIN}_app.${COMPOSE_BASE_DOMAIN}`)"
-            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}${COMPOSE_SUB_DOMAIN}.service=${COMPOSE_PROJECT_NAME}${COMPOSE_SUB_DOMAIN}app"
-            - "traefik.http.services.${COMPOSE_PROJECT_NAME}${COMPOSE_SUB_DOMAIN}app.loadbalancer.server.port=80"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}app.entrypoints=web"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}app.rule=Host(`${COMPOSE_PROJECT_NAME}_app.${COMPOSE_BASE_DOMAIN}`)"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}app.service=${COMPOSE_PROJECT_NAME}app"
+            - "traefik.http.services.${COMPOSE_PROJECT_NAME}app.loadbalancer.server.port=80"
         environment:
             - PHCOMM_ENV=local
             - PHCOMM_BUILD_ASSETS=false
@@ -23,13 +23,13 @@ services:
     phmoney_assets:
         container_name: ${COMPOSE_PROJECT_NAME}_assets
         build: ./assets
-        hostname: ${COMPOSE_SUB_DOMAIN}
+        hostname: assets
         labels:
             - "traefik.enable=true"
-            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}${COMPOSE_SUB_DOMAIN}.entrypoints=web"
-            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}${COMPOSE_SUB_DOMAIN}.rule=Host(`${COMPOSE_SUB_DOMAIN}_assets.${COMPOSE_BASE_DOMAIN}`)"
-            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}${COMPOSE_SUB_DOMAIN}.service=${COMPOSE_PROJECT_NAME}${COMPOSE_SUB_DOMAIN}assets"
-            - "traefik.http.services.${COMPOSE_PROJECT_NAME}${COMPOSE_SUB_DOMAIN}assets.loadbalancer.server.port=80"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}assets.entrypoints=web"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}assets.rule=Host(`${COMPOSE_PROJECT_NAME}_assets.${COMPOSE_BASE_DOMAIN}`)"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}assets.service=${COMPOSE_PROJECT_NAME}$assets"
+            - "traefik.http.services.${COMPOSE_PROJECT_NAME}assets.loadbalancer.server.port=80"
         volumes:
             - ../code/dist/:/var/www/html/:rw
 
