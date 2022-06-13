@@ -30,7 +30,9 @@ It is depended on docker environment https://github.com/kainotomo/local_services
 * From within image phmoney_phmoney docker shell: 
     - `composer install`
     - `php artisan phmoney_app:install`
+    - `php artisan phmoney_app:update`
     - `php artisan phmoney_provider:install`
+    - `php artisan phmoney_provider:update`
     - `php artisan migrate`
 
 That's it!!! Access application at http://phmoney_app.kainotomo.localhost/
