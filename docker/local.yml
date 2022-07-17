@@ -4,7 +4,7 @@ services:
 
     phmoney_app:
         container_name: ${COMPOSE_PROJECT_NAME}_app
-        image: phalouvas/laravel:php8.0-nginx-develop
+        build: ./nginx
         hostname: app
         labels:
             - "traefik.enable=true"
