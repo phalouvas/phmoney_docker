@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+
+    webapp:
+        image: phalouvas/laravel:php8.0-nginx
+        restart: always
+        environment:
+            - PHCOMM_ENV=none
+            - PHCOMM_BUILD_ASSETS=false
+            - PHCOMM_SUPERVISOR=false
+        volumes:
+            - ${WEBAPP_STORAGE_HOME}/site/wwwroot/code:/home/code
+            - ${WEBAPP_STORAGE_HOME}/site/wwwroot/docker/:/home/docker
