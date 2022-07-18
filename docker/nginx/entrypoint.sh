@@ -7,26 +7,35 @@ echo "Starting ssh..."
 mkdir -p /run/sshd
 /usr/sbin/sshd
 
-# setup production
-if [ $PHCOMM_ENV = "production" ]; then
-    echo "Setup production environment..."
+cd /var/www/html
+if [ $PHMONEY_ENV = "azure" ]; then
+    echo "First time installation..."
+    if [ -e index.nginx-debian.html ]; then
+        rm index.nginx-debian.html
+    fi
     cd /home/code
+    
     echo "Copying code..."
     cp -r -f * /var/www/html
-    cp .env.azure /var/www/html/.env
+    cp .env.$PHMONEY_ENV /var/www/html/.env.$PHMONEY_ENV
     if [ -f .htaccess ]; then
         cp .htaccess /var/www/html/.htaccess
     fi
-    cd /var/www/html
-    echo "Installing dependencies..."
-    composer install
-    if [ $PHCOMM_BUILD_ASSETS = "true" ]; then
-        echo "Building assets..."
-        npm install
-        npm run production
-    fi
-    echo "Database migrating..."
-    php artisan migrate --force
+
+fi
+
+cd /var/www/html
+chown -R www-data:www-data ../html
+echo "Copy environment file..."
+cp .env.$PHMONEY_ENV /var/www/html/.env
+echo "Database migrating..."
+php artisan migrate
+php artisan phmoney_app:install
+php artisan phmoney_app:update
+php artisan phmoney_provider:install
+php artisan phmoney_provider:install
+
+if [ $PHMONEY_ENV = "azure" ]; then
     echo "Clearing cache..."
     php artisan clear-compiled
     php artisan config:clear
@@ -35,23 +44,6 @@ if [ $PHCOMM_ENV = "production" ]; then
     php artisan view:cache
     php artisan route:clear
     php artisan route:cache
-fi
-
-# setup local
-if [ $PHCOMM_ENV = "local" ]; then
-    echo "Setup local environment..."
-    cd /var/www/html
-    echo "Copying env file..."
-    cp .env.local .env
-
-    if [ $PHCOMM_SUPERVISOR = "true" ]; then
-        echo "Starting supervisor..."
-        cd /home/docker
-        cp crontab /etc/cron.d/phcomm
-        cp supervisord.local.conf /etc/supervisor/conf.d/phcomm.conf
-        /usr/bin/supervisord
-    fi
-
 fi
 
 exec "$@"
