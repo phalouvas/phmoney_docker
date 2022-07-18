@@ -8,7 +8,7 @@ mkdir -p /run/sshd
 /usr/sbin/sshd
 
 cd /var/www/html
-if [ $PHMONEY_ENV = "azure" ]; then
+if [ $PHMONEY_ENV == "azure" ]; then
     echo "First time installation..."
     if [ -e index.nginx-debian.html ]; then
         rm index.nginx-debian.html
@@ -35,7 +35,7 @@ php artisan phmoney_app:update
 php artisan phmoney_provider:install
 php artisan phmoney_provider:install
 
-if [ $PHMONEY_ENV = "azure" ]; then
+if [ $PHMONEY_ENV == "azure" ]; then
     echo "Clearing cache..."
     php artisan clear-compiled
     php artisan config:clear
