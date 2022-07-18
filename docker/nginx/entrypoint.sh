@@ -15,8 +15,7 @@ if [ $PHMONEY_ENV = "azure" ]; then
     fi
     
     echo "Copying code..."
-    git clone https://github.com/kainotomo/phmoney_app.git phmoney_app
-
+    composer create-project --stability=dev kainotomo/phmoney_app phmoney_app
 fi
 
 echo "Fix permissions..."
