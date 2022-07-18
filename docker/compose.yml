@@ -4,30 +4,32 @@ services:
 
     phmoney_azure:
         build: ./nginx
-        image: phalouvas/phmoney_app:0.0.2
-        restart: always
-        environment:
-            - PHMONEY_ENV=azure
-        volumes:
-            - ../phmoney_app/:/home/code/
-            - ../docker/:/home/docker/
-
-    phmoney_local:
-        container_name: ${COMPOSE_PROJECT_NAME}_app
-        build: ./nginx
-        image: phalouvas/phmoney_app:local
-        hostname: app
+        image: phalouvas/phmoney_app:0.0.1
+        hostname: azure
         labels:
             - "traefik.enable=true"
-            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}app.entrypoints=web"
-            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}app.rule=Host(`${COMPOSE_PROJECT_NAME}_app.${COMPOSE_BASE_DOMAIN}`)"
-            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}app.service=${COMPOSE_PROJECT_NAME}app"
-            - "traefik.http.services.${COMPOSE_PROJECT_NAME}app.loadbalancer.server.port=80"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}azure.entrypoints=web"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}azure.rule=Host(`${COMPOSE_PROJECT_NAME}_azure.${COMPOSE_BASE_DOMAIN}`)"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}azure.service=${COMPOSE_PROJECT_NAME}azure"
+            - "traefik.http.services.${COMPOSE_PROJECT_NAME}azure.loadbalancer.server.port=80"
+        environment:
+            - PHMONEY_ENV=azure
+
+    phmoney_local:
+        container_name: ${COMPOSE_PROJECT_NAME}_local
+        build: ./nginx
+        image: phalouvas/phmoney_app:local
+        hostname: local
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}local.entrypoints=web"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}local.rule=Host(`${COMPOSE_PROJECT_NAME}_local.${COMPOSE_BASE_DOMAIN}`)"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}local.service=${COMPOSE_PROJECT_NAME}local"
+            - "traefik.http.services.${COMPOSE_PROJECT_NAME}local.loadbalancer.server.port=80"
         environment:
             - PHMONEY_ENV=local
         volumes:
-            - ../phmoney_app/:/var/www/html//:rw
-            - ../docker/:/home/docker//:rw
+            - ../phmoney_app/:/var/www/html/phmoney_app//:rw
 
     phmoney_assets:
         container_name: ${COMPOSE_PROJECT_NAME}_assets

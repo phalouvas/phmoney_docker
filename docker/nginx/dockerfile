@@ -76,6 +76,8 @@ COPY ./configs/www.conf /etc/php/8.1/fpm/pool.d/www.conf
 COPY ./configs/redis.conf /etc/redis/redis.conf
 COPY ./configs/php-ini-overrides.ini /usr/local/etc/php/conf.d/99-overrides.ini
 COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY ./configs/.env.local /var/www/html/.env.local
+COPY ./configs/.env.azure /var/www/html/.env.azure
 
 VOLUME /var/www/html
 

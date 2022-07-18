@@ -13,21 +13,22 @@ if [ $PHMONEY_ENV = "azure" ]; then
     if [ -e index.nginx-debian.html ]; then
         rm index.nginx-debian.html
     fi
-    cd /home/code
     
     echo "Copying code..."
-    cp -r -f * /var/www/html
-    cp .env.$PHMONEY_ENV /var/www/html/.env.$PHMONEY_ENV
-    if [ -f .htaccess ]; then
-        cp .htaccess /var/www/html/.htaccess
-    fi
+    git clone https://github.com/kainotomo/phmoney_app.git phmoney_app
 
 fi
 
-cd /var/www/html
+echo "Fix permissions..."
 chown -R www-data:www-data ../html
+
 echo "Copy environment file..."
-cp .env.$PHMONEY_ENV /var/www/html/.env
+mv .env.$PHMONEY_ENV /var/www/html/phmoney_app/.env
+
+cd /var/www/html/phmoney_app
+echo "Install Dependencies..."
+composer install
+composer update
 echo "Database migrating..."
 php artisan migrate
 php artisan phmoney_app:install
