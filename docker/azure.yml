@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+
+    phmoney_azure:
+        build: ./nginx
+        image: phalouvas/phmoney_app:0.0.1
+        hostname: azure
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}azure.entrypoints=web"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}azure.rule=Host(`${COMPOSE_PROJECT_NAME}_azure.${COMPOSE_BASE_DOMAIN}`)"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}azure.service=${COMPOSE_PROJECT_NAME}azure"
+            - "traefik.http.services.${COMPOSE_PROJECT_NAME}azure.loadbalancer.server.port=80"
+        environment:
+            - PHMONEY_ENV=azure
