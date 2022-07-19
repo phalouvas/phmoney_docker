@@ -3,7 +3,7 @@ version: '3.9'
 services:
 
     phmoney_azure:
-        image: phalouvas/phmoney_app:0.0.3
+        image: phalouvas/phmoney_app:0.0.6
         hostname: azure
         labels:
             - "traefik.enable=true"
@@ -13,3 +13,4 @@ services:
             - "traefik.http.services.${COMPOSE_PROJECT_NAME}azure.loadbalancer.server.port=80"
         environment:
             - PHMONEY_ENV=azure
+            - PHMONEY_VERSION=master

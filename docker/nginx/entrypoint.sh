@@ -9,13 +9,17 @@ mkdir -p /run/sshd
 
 cd /var/www/html
 if [ $PHMONEY_ENV == "azure" ]; then
-    echo "First time installation..."
-    if [ -e index.nginx-debian.html ]; then
-        rm index.nginx-debian.html
+    if [ -d "/var/www/html/phmoney_app" ]; 
+    then
+        echo "GitHub Pull code..."
+        cd phmoney_app
+        git pull
+        cd ..
+    else
+        echo "First time installation..."
+        git clone --depth 1 --branch $PHMONEY_VERSION https://github.com/kainotomo/phmoney_app.git
     fi
     
-    echo "Copying code..."
-    composer create-project --stability=dev kainotomo/phmoney_app phmoney_app
 fi
 
 echo "Fix permissions..."
