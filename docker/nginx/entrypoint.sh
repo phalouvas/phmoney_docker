@@ -22,7 +22,7 @@ echo "Fix permissions..."
 chown -R www-data:www-data ../html
 
 echo "Copy environment file..."
-mv .env.$PHMONEY_ENV /var/www/html/phmoney_app/.env
+cp .env.$PHMONEY_ENV /var/www/html/phmoney_app/.env
 
 cd /var/www/html/phmoney_app
 echo "Install Dependencies..."
