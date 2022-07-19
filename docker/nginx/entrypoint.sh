@@ -33,7 +33,7 @@ php artisan migrate
 php artisan phmoney_app:install
 php artisan phmoney_app:update
 php artisan phmoney_provider:install
-php artisan phmoney_provider:install
+php artisan phmoney_provider:update
 
 if [ $PHMONEY_ENV == "azure" ]; then
     echo "Clearing cache..."
