@@ -1,5 +1,21 @@
 FROM php:8.1-apache
+
+# Install the PHP extensions
+RUN set -ex; \
+	\
+	savedAptMark="$(apt-mark showmanual)"; \
+	\
+	apt-get update; \
+	apt-get install -y --no-install-recommends \
+		git \
+        nodejs \
+		npm \
+	;
+
 COPY ./apache/apache2.conf /etc/apache2/apache2.conf
+COPY ./apache/sites-available/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf
+COPY ./apache/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY ./apache/sites-enabled/000-default.conf /etc/apache2/sites-enabled/000-default.conf
 COPY ./apache/headers.load /etc/apache2/mods-enabled/headers.load
 COPY ./apache/rewrite.load /etc/apache2/mods-enabled/rewrite.load
 COPY ./php.ini /usr/local/etc/php/php.ini
