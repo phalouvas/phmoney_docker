@@ -31,7 +31,9 @@ cp .env.$PHMONEY_ENV /var/www/html/phmoney_app/.env
 cd /var/www/html/phmoney_app
 echo "Install Dependencies..."
 composer install
-composer update
+if [ $PHMONEY_ENV == "azure" ]; then
+    composer update
+fi
 echo "Database migrating..."
 php artisan migrate
 php artisan phmoney_app:install
