@@ -5,7 +5,7 @@ services:
     phmoney_local:
         container_name: ${COMPOSE_PROJECT_NAME}_local
         build: ./nginx
-        image: phalouvas/phmoney_app:0.0.7
+        image: phalouvas/phmoney_app:0.0.8
         hostname: local
         labels:
             - "traefik.enable=true"

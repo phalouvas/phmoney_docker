@@ -30,8 +30,8 @@ cp .env.$PHMONEY_ENV /var/www/html/phmoney_app/.env
 
 cd /var/www/html/phmoney_app
 echo "Install Dependencies..."
-composer install
 if [ $PHMONEY_ENV == "azure" ]; then
+    composer install
     composer update
 fi
 echo "Database migrating..."
