@@ -2,5 +2,5 @@ version: '3.9'
 
 networks:
     default:
-        name: ${COMPOSE_NETWORK_NAME}-local-net
-        driver: bridge
+        external:
+            name: kainotomo_services-local-net
